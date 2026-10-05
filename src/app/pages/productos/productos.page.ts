@@ -1,5 +1,6 @@
 import { Component, OnInit, inject } from '@angular/core';
 import { CurrencyPipe } from '@angular/common';
+import { RouterLink } from '@angular/router';
 import {
   IonHeader, IonToolbar, IonTitle, IonContent, IonButtons, IonBackButton,
   IonSpinner, IonCard, IonCardHeader, IonCardTitle, IonCardContent, IonButton
@@ -13,7 +14,7 @@ import { ProductService } from '../../services/product.service';
   styleUrls: ['./productos.page.scss'],
   standalone: true,
   imports: [
-    CurrencyPipe,
+    CurrencyPipe, RouterLink,
     IonHeader, IonToolbar, IonTitle, IonContent, IonButtons, IonBackButton,
     IonSpinner, IonCard, IonCardHeader, IonCardTitle, IonCardContent, IonButton
   ],
@@ -26,6 +27,14 @@ export class ProductosPage implements OnInit {
   loading = false;
   error = '';
 
+  // Paginación
+  page = 1;
+  readonly pageSize = 10;
+
+  get totalPages(): number {
+    return Math.max(1, Math.ceil(this.total / this.pageSize));
+  }
+
   ngOnInit(): void {
     this.loadProducts();
   }
@@ -34,7 +43,9 @@ export class ProductosPage implements OnInit {
     this.loading = true;
     this.error = '';
 
-    this.productService.getProducts().subscribe({
+    const skip = (this.page - 1) * this.pageSize;
+
+    this.productService.getProducts(this.pageSize, skip).subscribe({
       next: (response: ProductsResponse) => {
         this.products = response.products;
         this.total = response.total;
@@ -46,5 +57,20 @@ export class ProductosPage implements OnInit {
         this.loading = false;
       }
     });
+  }
+
+  goToPage(page: number): void {
+    if (page < 1 || page > this.totalPages || page === this.page) {
+      return;
+    }
+    this.page = page;
+    this.loadProducts();
+  }
+
+  // Stock valorado = unidades * precio - descuento aplicable
+  stockValue(product: Product): number {
+    const bruto = product.stock * product.price;
+    const descuento = bruto * (product.discountPercentage / 100);
+    return bruto - descuento;
   }
 }

@@ -30,14 +30,17 @@
   }
 
   @if (!loading && !error) {
-    <p>Productos cargados: <strong>{{ products.length }}</strong></p>
+    <p>
+      Mostrando <strong>{{ products.length }}</strong> de <strong>{{ total }}</strong> productos
+    </p>
 
     <div class="table-container">
       <table>
         <thead>
           <tr>
             <th>ID</th><th>Producto</th><th>Categoría</th><th>Marca</th>
-            <th>Precio</th><th>Valoración</th><th>Stock</th>
+            <th>Precio</th><th>Dto.</th><th>Ancho × Alto (cm)</th>
+            <th>Valoración</th><th>Stock</th><th>Stock valorado</th>
           </tr>
         </thead>
         <tbody>
@@ -53,12 +56,29 @@
               <td>{{ product.category }}</td>
               <td>{{ product.brand || 'Sin marca' }}</td>
               <td>{{ product.price | currency:'EUR' }}</td>
+              <td>{{ product.discountPercentage }} %</td>
+              <td>{{ product.dimensions.width }} × {{ product.dimensions.height }}</td>
               <td>⭐ {{ product.rating }}</td>
               <td>{{ product.stock }}</td>
+              <td><strong>{{ stockValue(product) | currency:'EUR' }}</strong></td>
             </tr>
           }
         </tbody>
       </table>
     </div>
+
+    <div class="pagination">
+      <ion-button fill="outline" [disabled]="page === 1" (click)="goToPage(page - 1)">
+        Anterior
+      </ion-button>
+      <span>Página {{ page }} de {{ totalPages }}</span>
+      <ion-button fill="outline" [disabled]="page === totalPages" (click)="goToPage(page + 1)">
+        Siguiente
+      </ion-button>
+    </div>
   }
+
+  <ion-button expand="block" fill="clear" routerLink="/inicio">
+    Volver a inicio
+  </ion-button>
 </ion-content>

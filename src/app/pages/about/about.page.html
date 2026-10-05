@@ -1,0 +1,33 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/inicio"></ion-back-button>
+    </ion-buttons>
+    <ion-title>About</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-padding">
+  <ion-card>
+    <ion-card-header>
+      <ion-card-title>{{ empresa }}</ion-card-title>
+    </ion-card-header>
+    <ion-card-content>
+      <p>
+        {{ empresa }} es una pequeña empresa de desarrollo de aplicaciones multiplataforma.
+        Creamos aplicaciones web y móviles con Ionic y Angular que se conectan a APIs REST
+        para mostrar información en tiempo real de forma clara y adaptada a cualquier dispositivo.
+      </p>
+      <p>
+        Esta aplicación es un catálogo de productos que consume la API pública de DummyJSON,
+        con paginación, valoración del stock y diseño adaptable.
+      </p>
+      <ion-button [href]="githubUrl" target="_blank" rel="noopener">
+        Ver mi perfil de GitHub
+      </ion-button>
+      <ion-button fill="outline" routerLink="/inicio">
+        Volver a inicio
+      </ion-button>
+    </ion-card-content>
+  </ion-card>
+</ion-content>
