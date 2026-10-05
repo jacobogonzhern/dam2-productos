@@ -18,5 +18,5 @@ import {
 })
 export class AboutPage {
   empresa = 'JG Dev Solutions';
-  githubUrl = 'https://github.com/TU_USUARIO';
+  githubUrl = 'https://github.com/jacobogonzhern';
 }
