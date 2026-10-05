@@ -1,12 +1,17 @@
 import { Component } from '@angular/core';
 import { RouterLink } from '@angular/router';
-import { IonHeader, IonToolbar, IonTitle, IonContent, IonButton } from '@ionic/angular';
+import { IonHeader, IonToolbar, IonTitle, IonContent, IonButton, IonButtons } from '@ionic/angular';
+
+import { ThemeToggleComponent } from '../../components/theme-toggle/theme-toggle.component';
 
 @Component({
   selector: 'app-inicio',
   templateUrl: './inicio.page.html',
   styleUrls: ['./inicio.page.scss'],
   standalone: true,
-  imports: [IonHeader, IonToolbar, IonTitle, IonContent, IonButton, RouterLink],
+  imports: [
+    ThemeToggleComponent, RouterLink,
+    IonHeader, IonToolbar, IonTitle, IonContent, IonButton, IonButtons,
+  ],
 })
 export class InicioPage {}
